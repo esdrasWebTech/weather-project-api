@@ -9,3 +9,19 @@ In this project we will consume an API to obtain the weather in different parts 
 - Steps to generate your API key:
   - Create an account on the website
   - In the dashboard, select the menu option called API keys, and then create and activate a new key.  
+
+### API documentation
+---
+📒 How to get it?
+
+* In the main menu select the option API
+* then scroll down to the title _"Current and forecast weather data collection"_ and select de option **API Doc** in the _"Current Weather Data"_ block.  
+
+### How to make an API call
+---
+
+* In the API Doc. scroll down to the section **Other features** - _Geocoding API_
+* then copy the API call:
+```javascript
+https://api.openweathermap.org/data/2.5/weather?q={city name},{state code},{country code}&appid={API key} 
+```
