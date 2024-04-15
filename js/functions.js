@@ -1,4 +1,4 @@
-import { mainContainer, cityField, countryField, submitButton } from "./selectors.js";
+import { mainContainer, boxResult, cityField, countryField, submitButton } from "./selectors.js";
 
 // Searching Weather
 
@@ -82,10 +82,65 @@ function apiRequest(city, country){
 
             if(resolve.cod === '404'){
                 alertMessage('No se encontraron resultados para tu búsqueda');
-            }
-        })
-        .catch( reject => {
 
-            console.log(reject);
+                return;
+            }
+
+            // check existing HTML
+            clearHTML();            
+
+            // Create HTML and show the Weather
+            showWeather(resolve);
         })
+};
+
+// Create Weather HTML
+
+function showWeather(data){
+
+    const {main:{temp, temp_max, temp_min}, name} = data;
+
+    // Temps Celsius
+    const tempCelsius = kelvinToCelsius(temp);
+    const tempMaxCelsius = kelvinToCelsius(temp_max);
+    const tempMinCelsius = kelvinToCelsius(temp_min);
+    
+    // create HTML
+    const countryName = document.createElement('p');
+    countryName.classList.add('font-bold', 'text-2xl');
+    countryName.textContent = name;
+
+    const actualTemp = document.createElement('p');
+    actualTemp.innerHTML = `${tempCelsius} &#8451;`;
+    actualTemp.classList.add('font-bold', 'text-6xl');
+
+    const actualMaxTemp = document.createElement('p');
+    actualMaxTemp.innerHTML = `Máxima: ${tempMaxCelsius} &#8451;`;
+    actualMaxTemp.classList.add('text-xl');
+
+    const actualMinTemp = document.createElement('p');
+    actualMinTemp.innerHTML = `Mínima: ${tempMinCelsius} &#8451;`;
+    actualMinTemp.classList.add('text-xl');
+
+    const innerBoxResult = document.createElement('div');
+    innerBoxResult.classList.add('text-center', 'text-white');
+
+    // insert HTML
+    innerBoxResult.appendChild(countryName);
+    innerBoxResult.appendChild(actualTemp);
+    innerBoxResult.appendChild(actualMaxTemp);
+    innerBoxResult.appendChild(actualMinTemp);
+    boxResult.appendChild(innerBoxResult);
+};
+
+// Convert Kelvin degrees to Celsius 
+const kelvinToCelsius = degrees => parseInt(degrees - 273.15);
+
+// Clear HTML
+function clearHTML(){
+
+    while(boxResult.firstChild){
+
+        boxResult.removeChild(boxResult.firstChild);
+    };
 };
