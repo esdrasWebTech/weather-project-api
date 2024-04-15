@@ -86,6 +86,16 @@ function apiRequest(city, country){
             if(resolve.cod === '404'){
                 alertMessage('No se encontraron resultados para tu búsqueda');
 
+                // delete spinner
+                clearHTML();
+
+                // Returning welcome message 
+                const welcomeMessage = document.createElement('p');
+                welcomeMessage.classList.add('text-center', 'text-white', 'mt-6');
+                welcomeMessage.textContent = "Agrega tu ciudad y país, el resultado se mostrará aquí";
+
+                boxResult.appendChild(welcomeMessage);
+
                 return;
             }
 
